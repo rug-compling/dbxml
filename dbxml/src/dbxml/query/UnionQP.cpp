@@ -485,13 +485,13 @@ bool UnionIterator::next(DynamicContext *context)
 
 bool UnionIterator::seek(int container, const DocID &did, const NsNid &nid, DynamicContext *context)
 {
-	if((next_ & LEFT) || (left_ && isSameNID(left_, container, did, nid) < 0)) {
+	if((next_ & LEFT && left_) || (left_ && isSameNID(left_, container, did, nid) < 0)) {
 		if(!left_->seek(container, did, nid, context)) {
 			delete left_;
 			left_ = 0;
 		}
 	}
-	if((next_ & RIGHT) || (right_ && isSameNID(right_, container, did, nid) < 0)) {
+	if((next_ & RIGHT && right_) || (right_ && isSameNID(right_, container, did, nid) < 0)) {
 		if(!right_->seek(container, did, nid, context)) {
 			delete right_;
 			right_ = 0;
