@@ -1,0 +1,11 @@
+This repository contains Berkeley DB XML 2.5.16, plus some small patches for
+bugs that we have encountered.
+
+The reason for maintaining this repository is twofold:
+
+- Berkeley DB XML 6.1 contains a bug that returns an incorrect number of
+  nodes for some queries.
+
+- Berkeley DB XML 6.1 switched from the Sleepy Cat License to the Affero
+  GPL version 3. This probably conflicts with some of the many indirect
+  dependencies of e.g. Dact.
