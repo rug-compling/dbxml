@@ -339,6 +339,13 @@ touch -c xqilla/src/lexer/XQLexer.cpp xqilla/src/lexer/XQLexer.hpp
 # Ensure s_paths is executable.
 chmod +x dbxml/dist/s_paths
 
+# Compile DBXML and dependencies using the C++03 standard.
+# Older compilers do not have this option. Note: what if
+# we have existing CXXFLAGS already?
+if ${CC} --help=c++ | grep -q "c++03" ; then
+  CONF_ENV="$CONF_ENV CXXFLAGS=-std=c++03"
+fi
+
 # Berkeley DB
 if [ $BUILD_ONE = "no" -o $BUILD_ONE = "berkeleydb" ]; then
     echo Start DB build: `date`
