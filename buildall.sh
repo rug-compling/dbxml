@@ -333,14 +333,8 @@ fi
 
 # Git checkout breaks timestamps. Avoid regenerating files,
 # which requires a custom flex version.
-
-if [ -f xqilla/src/parser/XQParser.cpp -a -f xqilla/src/parser/XQParser.hpp ]; then
-  touch xqilla/src/parser/XQParser.cpp xqilla/src/parser/XQParser.hpp
-fi
-
-if [ -f xqilla/src/lexer/XQLexer.cpp -a -f xqilla/src/lexer/XQLexer.hpp ]; then
-  touch xqilla/src/lexer/XQLexer.cpp xqilla/src/lexer/XQLexer.hpp
-fi
+touch -c xqilla/src/parser/XQParser.cpp xqilla/src/parser/XQParser.hpp
+touch -c xqilla/src/lexer/XQLexer.cpp xqilla/src/lexer/XQLexer.hpp
 
 # Ensure s_paths is executable.
 chmod +x dbxml/dist/s_paths
