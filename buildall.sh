@@ -34,7 +34,7 @@ XQILLA_INSTALL_DEFAULT=./install
 # once, the configure steps are performed unconditionally.
 #
 usage() {
-	cat <<EOF
+    cat <<EOF
 Usage: $0 [options]
   --help                                 print this help message
   -c <C compiler name>                   [gcc]
@@ -55,7 +55,7 @@ Usage: $0 [options]
                                            forces --enable-debug and requires
                                            either --with-tcl --enable-java
   --with-junit:                          Path to a JUnit (4) .jar file.
-                                         Required if both --enable-test and 
+                                         Required if both --enable-test and
                                          --enable-java are specified.
   --enable-dependencies:                 Build include file dependencies for
                                          dbxml.  May only work for g++.
@@ -78,7 +78,7 @@ Usage: $0 [options]
   --with-berkeleydb=<path>:              use Berkeley DB sources in <path>
   --with-berkeleydb-conf=<flags>:        pass flags to DB configure
   --with-berkeleydb-prefix=<path>:       installation prefix for DB.  This
-                                         option can also be used with 
+                                         option can also be used with
                                          --build-one=dbxml to point to an
                                          existing Berkeley DB installation
                                            [$DB_INSTALL_DEFAULT]
@@ -149,128 +149,128 @@ PERL="perl"
 # Parse arguments
 for option
 do
-	# If the previous option needs an argument, assign it.
-	if test -n "$prev" ; then
-		eval "$prev=\$option"
-		prev=
-		continue
-	fi
+    # If the previous option needs an argument, assign it.
+    if test -n "$prev" ; then
+        eval "$prev=\$option"
+        prev=
+        continue
+    fi
 
-	case "$option" in
-	-*=*) optarg=`echo "$option" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
-	*) optarg= ;;
-	esac
+    case "$option" in
+        -*=*) optarg=`echo "$option" | sed 's/[-_a-zA-Z0-9]*=//'` ;;
+        *) optarg= ;;
+    esac
 
-	case "$option" in
-	-c)	prev=CC ;;
-	-x)	prev=CXX ;;
-	-m)	prev=MAKE ;;
-	-b)	prev=BITS ;;
-	--no-configure)
-		DO_CONFIGURE="no"
-		;;
-	--clean)
-		DO_CLEAN="clean"
-		;;
-	--distclean)
-		DO_CLEAN="distclean"
-		;;
-	--prefix=*)
-		DBXML_INSTALL_DIR="$optarg"
-		DB_INSTALL_DIR="$optarg"
-		XQILLA_INSTALL_DIR="$optarg"
-		XERCES_INSTALL_DIR="$optarg"
-		;;
-	--enable-test)
-		# don't add enable-test to DB unless also enabling tcl
-		# handle that below...
-		#DB_CONF_ARGS="$DB_CONF_ARGS $option"
-		DBXML_CONF_ARGS="$DBXML_CONF_ARGS $option"
-		TEST_ENABLED="yes"
-		;;
-	--enable-debug)
-		DB_CONF_ARGS="$DB_CONF_ARGS --enable-debug"
-		DBXML_CONF_ARGS="$DBXML_CONF_ARGS --enable-debug"
-		XERCES_CONF_ARGS="$XERCES_CONF_ARGS --enable-debug"
-		XQILLA_CONF_ARGS="$XQILLA_CONF_ARGS --enable-debug"
-		DEBUG_ENABLED="yes"
-		;;
-	--disable-rpath)
-		#DB_CONF_ARGS="$DB_CONF_ARGS --disable-rpath"
-		DBXML_CONF_ARGS="$DBXML_CONF_ARGS --disable-rpath"
-		#XERCES_CONF_ARGS="$XERCES_CONF_ARGS"
-		XQILLA_CONF_ARGS="$XQILLA_CONF_ARGS --disable-rpath"
-		;;
-	--enable-dependencies)
-		DBXML_CONF_ARGS="$DBXML_CONF_ARGS --enable-dependency-tracking"
-		XQILLA_CONF_ARGS="$XQILLA_CONF_ARGS --enable-dependency-tracking"
-		;;
-	--enable-java)
-		DB_CONF_ARGS="$DB_CONF_ARGS $option"
-		DBXML_CONF_ARGS="$DBXML_CONF_ARGS $option"
-		JAVA_ENABLED="yes"
-		;;
-	--with-tcl=*)
-		DB_CONF_ARGS="$DB_CONF_ARGS $option"
-		DBXML_CONF_ARGS="$DBXML_CONF_ARGS $option"
-		TCL_ENABLED="yes"
-		;;
-	--with-junit=*)
-		DBXML_CONF_ARGS="$DBXML_CONF_ARGS $option"
-		;;
+    case "$option" in
+        -c)	prev=CC ;;
+        -x)	prev=CXX ;;
+        -m)	prev=MAKE ;;
+        -b)	prev=BITS ;;
+        --no-configure)
+            DO_CONFIGURE="no"
+            ;;
+        --clean)
+            DO_CLEAN="clean"
+            ;;
+        --distclean)
+            DO_CLEAN="distclean"
+            ;;
+        --prefix=*)
+            DBXML_INSTALL_DIR="$optarg"
+            DB_INSTALL_DIR="$optarg"
+            XQILLA_INSTALL_DIR="$optarg"
+            XERCES_INSTALL_DIR="$optarg"
+            ;;
+        --enable-test)
+            # don't add enable-test to DB unless also enabling tcl
+            # handle that below...
+            #DB_CONF_ARGS="$DB_CONF_ARGS $option"
+            DBXML_CONF_ARGS="$DBXML_CONF_ARGS $option"
+            TEST_ENABLED="yes"
+            ;;
+        --enable-debug)
+            DB_CONF_ARGS="$DB_CONF_ARGS --enable-debug"
+            DBXML_CONF_ARGS="$DBXML_CONF_ARGS --enable-debug"
+            XERCES_CONF_ARGS="$XERCES_CONF_ARGS --enable-debug"
+            XQILLA_CONF_ARGS="$XQILLA_CONF_ARGS --enable-debug"
+            DEBUG_ENABLED="yes"
+            ;;
+        --disable-rpath)
+            #DB_CONF_ARGS="$DB_CONF_ARGS --disable-rpath"
+            DBXML_CONF_ARGS="$DBXML_CONF_ARGS --disable-rpath"
+            #XERCES_CONF_ARGS="$XERCES_CONF_ARGS"
+            XQILLA_CONF_ARGS="$XQILLA_CONF_ARGS --disable-rpath"
+            ;;
+        --enable-dependencies)
+            DBXML_CONF_ARGS="$DBXML_CONF_ARGS --enable-dependency-tracking"
+            XQILLA_CONF_ARGS="$XQILLA_CONF_ARGS --enable-dependency-tracking"
+            ;;
+        --enable-java)
+            DB_CONF_ARGS="$DB_CONF_ARGS $option"
+            DBXML_CONF_ARGS="$DBXML_CONF_ARGS $option"
+            JAVA_ENABLED="yes"
+            ;;
+        --with-tcl=*)
+            DB_CONF_ARGS="$DB_CONF_ARGS $option"
+            DBXML_CONF_ARGS="$DBXML_CONF_ARGS $option"
+            TCL_ENABLED="yes"
+            ;;
+        --with-junit=*)
+            DBXML_CONF_ARGS="$DBXML_CONF_ARGS $option"
+            ;;
         --enable-perl)                  BUILD_PERL="yes" ;;
         --perl-installdir=*)            PERL_INSTALLDIR="$optarg" ;;
-	--with-dbxml=*)			DBXML_DIR="$optarg" ;;
-	--with-berkeleydb=*)		DB_DIR="$optarg" ;;
-	--with-xqilla=*)		XQILLA_DIR="$optarg" ;;
-	--with-xerces=*)		XERCES_DIR="$optarg" ;;
+        --with-dbxml=*)			DBXML_DIR="$optarg" ;;
+        --with-berkeleydb=*)		DB_DIR="$optarg" ;;
+        --with-xqilla=*)		XQILLA_DIR="$optarg" ;;
+        --with-xerces=*)		XERCES_DIR="$optarg" ;;
 
-	--with-dbxml-conf=*)		DBXML_CONF_XARGS="$DBXML_CONF_XARGS $optarg" ;;
-	--with-berkeleydb-conf=*)	DB_CONF_XARGS="$optarg" ;;
-	--with-xqilla-conf=*)		XQILLA_CONF_XARGS="$XQILLA_CONF_XARGS $optarg" ;;
-	--with-xerces-conf=*)		XERCES_CONF_XARGS="$XERCES_CONF_XARGS $optarg" ;;
+        --with-dbxml-conf=*)		DBXML_CONF_XARGS="$DBXML_CONF_XARGS $optarg" ;;
+        --with-berkeleydb-conf=*)	DB_CONF_XARGS="$optarg" ;;
+        --with-xqilla-conf=*)		XQILLA_CONF_XARGS="$XQILLA_CONF_XARGS $optarg" ;;
+        --with-xerces-conf=*)		XERCES_CONF_XARGS="$XERCES_CONF_XARGS $optarg" ;;
 
-	--with-dbxml-prefix=*)		DBXML_INSTALL_DIR="$optarg" ;;
-	--with-berkeleydb-prefix=*)	DB_INSTALL_DIR="$optarg" ;;
-	--with-xqilla-prefix=*)		XQILLA_INSTALL_DIR="$optarg" ;;
-	--with-xerces-prefix=*)		XERCES_INSTALL_DIR="$optarg" ;;
+        --with-dbxml-prefix=*)		DBXML_INSTALL_DIR="$optarg" ;;
+        --with-berkeleydb-prefix=*)	DB_INSTALL_DIR="$optarg" ;;
+        --with-xqilla-prefix=*)		XQILLA_INSTALL_DIR="$optarg" ;;
+        --with-xerces-prefix=*)		XERCES_INSTALL_DIR="$optarg" ;;
 
-	--with-configure-env=*)		CONF_ENV="$CONF_ENV $optarg" ;;
+        --with-configure-env=*)		CONF_ENV="$CONF_ENV $optarg" ;;
 
-	--build-one=*)
-		if [ $BUILD_ONE = "no" ]; then
-		    BUILD_ONE="$optarg"
-		    case $BUILD_ONE in
-			berkeleydb|xerces|xqilla|dbxml|perl) ;;
-			*)
-			    echo "$0: error: $BUILD_ONE is not a valid"
-			    echo "library name for --build-one." 1>&2
-			    exit 1
-			    ;;
-		    esac
-		else
-		    echo "$O: error: --build-one already specified" 1>&2
-		    exit 1
-	        fi
-		;;
+        --build-one=*)
+            if [ $BUILD_ONE = "no" ]; then
+                BUILD_ONE="$optarg"
+                case $BUILD_ONE in
+                    berkeleydb|xerces|xqilla|dbxml|perl) ;;
+                    *)
+                        echo "$0: error: $BUILD_ONE is not a valid"
+                        echo "library name for --build-one." 1>&2
+                        exit 1
+                        ;;
+                esac
+            else
+                echo "$O: error: --build-one already specified" 1>&2
+                exit 1
+            fi
+            ;;
 
-	-h|--help|-?)		usage ; exit 0 ;;
+        -h|--help|-?)		usage ; exit 0 ;;
 
-	*)	echo "$0: error: $option invalid option." 1>&2
-		echo "Run with --help to see usage." 1>&2
-		exit 1
-		;;
-	esac
+        *)	echo "$0: error: $option invalid option." 1>&2
+            echo "Run with --help to see usage." 1>&2
+            exit 1
+            ;;
+    esac
 done
 
 # validate configuration state
 if [ $TEST_ENABLED = "yes" ]; then
     if [ $TCL_ENABLED = "no" -a $JAVA_ENABLED = "no" ]; then
-	echo "$0: error: --enable-test requires either --with-tcl or --enable-java" 1>&2
+        echo "$0: error: --enable-test requires either --with-tcl or --enable-java" 1>&2
         exit 1
     fi
     if [ $TCL_ENABLED = "yes" ]; then
-	DB_CONF_ARGS="$DB_CONF_ARGS --enable-test --enable-tcl"
+        DB_CONF_ARGS="$DB_CONF_ARGS --enable-test --enable-tcl"
     fi
 fi
 
@@ -302,31 +302,31 @@ if [ $DO_CLEAN != "no" ]; then
     echo "Performing clean: $DO_CLEAN"
     # DB
     if [ $BUILD_ONE = "no" -o $BUILD_ONE = "berkeleydb" ]; then
-	cd $DB_DIR/build_unix
-	$MAKE $DO_CLEAN
-	cd $TOP
+        cd $DB_DIR/build_unix
+        $MAKE $DO_CLEAN
+        cd $TOP
     fi
     # Xerces
     if [ $BUILD_ONE = "no" -o $BUILD_ONE = "xerces" ]; then
-	cd $XERCES_DIR
-	$MAKE $DO_CLEAN
-	cd $TOP
+        cd $XERCES_DIR
+        $MAKE $DO_CLEAN
+        cd $TOP
     fi
     # XQilla
     if [ $BUILD_ONE = "no" -o $BUILD_ONE = "xqilla" ]; then
-	cd $XQILLA_BUILD_DIR
-	$MAKE $DO_CLEAN
-	cd $TOP
+        cd $XQILLA_BUILD_DIR
+        $MAKE $DO_CLEAN
+        cd $TOP
     fi
     # DBXML
     if [ $BUILD_ONE = "no" -o $BUILD_ONE = "dbxml" ]; then
-	cd $DBXML_BUILD_DIR
-	$MAKE $DO_CLEAN
+        cd $DBXML_BUILD_DIR
+        $MAKE $DO_CLEAN
     fi
     # Perl
     if [ $BUILD_ONE = "no" -o $BUILD_ONE = "perl" ]; then
-	cd $DBXML_DIR/src/perl
-	$MAKE $DO_CLEAN
+        cd $DBXML_DIR/src/perl
+        $MAKE $DO_CLEAN
     fi
     exit 0
 fi
@@ -339,11 +339,12 @@ touch -c xqilla/src/lexer/XQLexer.cpp xqilla/src/lexer/XQLexer.hpp
 # Ensure s_paths is executable.
 chmod +x dbxml/dist/s_paths
 
-# Compile DBXML and dependencies using the C++03 standard.
+$CONF_ENCONF_ENV_1=$CONF_ENV
+# Compile DBXML and dependencies using the GNU++03 standard.
 # Older compilers do not have this option. Note: what if
 # we have existing CXXFLAGS already?
-if ${CC} --help=c++ | grep -q "c++03" ; then
-  CONF_ENV="$CONF_ENV CXXFLAGS=-std=c++03"
+if ${CC} --help=c++ | grep -F -q "gnu++11" ; then
+    CONF_ENV="$CONF_ENV CXXFLAGS=-std=gnu++11"
 fi
 
 # Berkeley DB
@@ -351,38 +352,38 @@ if [ $BUILD_ONE = "no" -o $BUILD_ONE = "berkeleydb" ]; then
     echo Start DB build: `date`
     cd $DB_DIR/build_unix
     if [ $DO_CONFIGURE = "yes" ]; then
-	echo Configuring Berkeley DB
-	eval $CONF_ENV ../dist/configure --prefix=$DB_INSTALL_DIR --enable-cxx \
-	    $DB_CONF_ARGS $DB_CONF_XARGS || exit $?
+        echo Configuring Berkeley DB
+        eval $CONF_ENV ../dist/configure --prefix=$DB_INSTALL_DIR --enable-cxx \
+            $DB_CONF_ARGS $DB_CONF_XARGS || exit $?
     fi
 
     echo Building Berkeley DB
     $MAKE || exit $?
 
     if [ $DO_INSTALL = "yes" ]; then
-	echo Installing Berkeley DB
-    # this conditional code is to avoid make install failures for
-    # Berkeley DB when the distribution does not have documentation.
-    # DB documentation is included in DB XML documentation.
-	DOCLIST="api_reference articles collections csharp gsg gsg_db_rep gsg_txn index.html java license programmer_reference porting"
-	if [ -d ../docs ]; then
+        echo Installing Berkeley DB
+        # this conditional code is to avoid make install failures for
+        # Berkeley DB when the distribution does not have documentation.
+        # DB documentation is included in DB XML documentation.
+        DOCLIST="api_reference articles collections csharp gsg gsg_db_rep gsg_txn index.html java license programmer_reference porting"
+        if [ -d ../docs ]; then
             rmdocs="no"
             cd ../docs
             touch $DOCLIST 2>/dev/null
             cd ../build_unix
-	else
+        else
             mkdir ../docs
             cd ../docs
             touch $DOCLIST
             rmdocs="yes"
             cd ../build_unix
-	fi
-	$MAKE install || exit $?
-	# do not install DB docs
+        fi
+        $MAKE install || exit $?
+        # do not install DB docs
         rm -rf $DB_INSTALL_DIR/docs
-	if [ $rmdocs = "yes" ]; then
+        if [ $rmdocs = "yes" ]; then
             rm -rf ../docs
-	fi
+        fi
 
     fi
     cd $TOP
@@ -401,9 +402,9 @@ if [ $BUILD_ONE = "no" -o $BUILD_ONE = "xerces" ]; then
     echo Start Xerces build: `date`
     cd $XERCES_DIR
     if [ $DO_CONFIGURE = "yes" ]; then
-	echo Configuring Xerces
- 	eval $CONF_ENV ./configure --prefix=$XERCES_INSTALL_DIR \
-	$XERCES_CONF_ARGS $XERCES_CONF_XARGS || exit $?
+        echo Configuring Xerces
+        eval $CONF_ENV ./configure --prefix=$XERCES_INSTALL_DIR \
+            $XERCES_CONF_ARGS $XERCES_CONF_XARGS || exit $?
     fi
 
     echo Building Xerces
@@ -413,21 +414,21 @@ if [ $BUILD_ONE = "no" -o $BUILD_ONE = "xerces" ]; then
     cd ..
 
     if [ $DO_INSTALL = "yes" ]; then
-	echo Installing Xerces
-    # remove symlinks that cause make install to fail if re-run
-	for i in $XERCES_TO_REMOVE
-	do
-	    rm -f $XERCES_INSTALL_DIR/lib/$i
-	done
-    # only install source tree, not samples
-	cd src
-	$MAKE install || exit $?
-	cd ..
-    # remove unused xerces library.  Cannot suppress build, but can remove it.
-	for i in $XERCES_DEPDOM
-	  do
-	  rm -f $XERCES_INSTALL_DIR/lib/$i
-	done
+        echo Installing Xerces
+        # remove symlinks that cause make install to fail if re-run
+        for i in $XERCES_TO_REMOVE
+        do
+            rm -f $XERCES_INSTALL_DIR/lib/$i
+        done
+        # only install source tree, not samples
+        cd src
+        $MAKE install || exit $?
+        cd ..
+        # remove unused xerces library.  Cannot suppress build, but can remove it.
+        for i in $XERCES_DEPDOM
+        do
+            rm -f $XERCES_INSTALL_DIR/lib/$i
+        done
     fi
     cd $TOP
     echo End Xerces build: `date`
@@ -435,6 +436,12 @@ fi
 
 echo "********************************"
 echo "********************************"
+
+CONF_ENV=$CONF_ENV_1
+if ${CC} --help=c++ | grep -F -q "gnu++03" ; then
+    CONF_ENV="$CONF_ENV CXXFLAGS=-std=gnu++03"
+fi
+
 
 # XQilla
 # change args, depending on platform/config
@@ -445,18 +452,18 @@ if [ $BUILD_ONE = "no" -o $BUILD_ONE = "xqilla" ]; then
     echo Start XQilla build: `date`
     cd $XQILLA_BUILD_DIR
     if [ $DO_CONFIGURE = "yes" ]; then
-	echo Configuring XQilla
-	eval $CONF_ENV ../configure --prefix=$XQILLA_INSTALL_DIR \
-	    --with-xerces=$XERCESCROOT \
-	    $XQILLA_CONF_ARGS $XQILLA_CONF_XARGS || exit $?
+        echo Configuring XQilla
+        eval $CONF_ENV ../configure --prefix=$XQILLA_INSTALL_DIR \
+            --with-xerces=$XERCESCROOT \
+            $XQILLA_CONF_ARGS $XQILLA_CONF_XARGS || exit $?
     fi
 
     echo Building XQilla
     $MAKE || exit $?
 
     if [ $DO_INSTALL = "yes" ]; then
-	echo Installing XQilla
-	$MAKE install || exit $?
+        echo Installing XQilla
+        $MAKE install || exit $?
     fi
 
     cd $TOP
@@ -472,21 +479,21 @@ if [ $BUILD_ONE = "no" -o $BUILD_ONE = "dbxml" ]; then
     cd $DBXML_BUILD_DIR
     if [ $DO_CONFIGURE = "yes" ]; then
         echo Configuring DB XML
-         # Note: passing ../../$DB_DIR for --with-dbbuild will not work
-         # if DB_DIR is absolute.  This is only used for test configuration,
-         # and failure to find the directory is not fatal.
-         eval $CONF_ENV ../configure --prefix=$DBXML_INSTALL_DIR \
-             --with-xqilla=$XQILLA_INSTALL_DIR \
-             --with-xerces=$XERCES_INSTALL_DIR \
-             --with-berkeleydb=$DB_INSTALL_DIR \
-             --with-dbbuild=../../$DB_DIR $DBXML_CONF_ARGS \
-             $DBXML_CONF_XARGS || exit $?
+        # Note: passing ../../$DB_DIR for --with-dbbuild will not work
+        # if DB_DIR is absolute.  This is only used for test configuration,
+        # and failure to find the directory is not fatal.
+        eval $CONF_ENV ../configure --prefix=$DBXML_INSTALL_DIR \
+            --with-xqilla=$XQILLA_INSTALL_DIR \
+            --with-xerces=$XERCES_INSTALL_DIR \
+            --with-berkeleydb=$DB_INSTALL_DIR \
+            --with-dbbuild=../../$DB_DIR $DBXML_CONF_ARGS \
+            $DBXML_CONF_XARGS || exit $?
     fi
     echo Building DB XML
     $MAKE || exit $?
     if [ $DO_INSTALL = "yes" ]; then
-	echo Installing BDB XML
-	$MAKE install || exit $?
+        echo Installing BDB XML
+        $MAKE install || exit $?
     fi
 
     cd $TOP
@@ -495,29 +502,29 @@ fi
 
 # Perl
 if [ $BUILD_PERL = "yes" ]; then
-if [ $BUILD_ONE = "no" -o $BUILD_ONE = "perl" ]; then
-    echo Start Perl build: `date`
-    echo "If Perl build fails, see $DBXML_DIR/src/perl/README"
-    echo "for configuration and build instructions"
-    PERL_INSTALL=""
-    if [ "$PERL_INSTALLDIR" != "" ]; then
-	PERL_INSTALL="PREFIX=$PERL_INSTALLDIR"
-	echo "Perl PREFIX is $PERL_INSTALLDIR"
-    fi
-    cd $DBXML_DIR/src/perl
-    if [ $DO_CONFIGURE = "yes" ]; then
-	$PERL Makefile.PL $PERL_INSTALL
-    fi
-    echo Building Perl
-    $MAKE || exit $?
-    echo Testing Perl
-    $MAKE test || exit $?
-    if [ $DO_INSTALL = "yes" ]; then
-	echo Installing Perl
-	$MAKE install || exit $?
-    fi
+    if [ $BUILD_ONE = "no" -o $BUILD_ONE = "perl" ]; then
+        echo Start Perl build: `date`
+        echo "If Perl build fails, see $DBXML_DIR/src/perl/README"
+        echo "for configuration and build instructions"
+        PERL_INSTALL=""
+        if [ "$PERL_INSTALLDIR" != "" ]; then
+            PERL_INSTALL="PREFIX=$PERL_INSTALLDIR"
+            echo "Perl PREFIX is $PERL_INSTALLDIR"
+        fi
+        cd $DBXML_DIR/src/perl
+        if [ $DO_CONFIGURE = "yes" ]; then
+            $PERL Makefile.PL $PERL_INSTALL
+        fi
+        echo Building Perl
+        $MAKE || exit $?
+        echo Testing Perl
+        $MAKE test || exit $?
+        if [ $DO_INSTALL = "yes" ]; then
+            echo Installing Perl
+            $MAKE install || exit $?
+        fi
 
-    cd $TOP
-    echo End Perl build: `date`
-fi
+        cd $TOP
+        echo End Perl build: `date`
+    fi
 fi
